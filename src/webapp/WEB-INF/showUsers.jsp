@@ -19,11 +19,11 @@
             <td>${user.getLastName()}</td>
             <td>${user.getEmail()}</td>
             <td>
-                <form action = "/users/update" method="get">
+                <form action = "/update" method="get">
                     <input type="hidden" name="id" value="${user.getId()}">
                     <input type="submit" value="Изменить" style="float:left">
                 </form>
-                <form action="/users/delete" method="post">
+                <form action="/delete" method="get">
                     <input type="hidden" name="id" value="${user.getId()}">
                     <input type="submit" value="Удалить" style="float:left">
                 </form></td>
