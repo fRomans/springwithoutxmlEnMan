@@ -13,6 +13,6 @@ public class HomeController {
 
     @RequestMapping("/welcome")
     public String getWelcome(){
-        return "welcome";
+        return "showUsers";
     }
 }

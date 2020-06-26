@@ -5,13 +5,10 @@ import com.javamaster.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class CarServiceImp implements CarService {
+public class UserServiceImp implements UserService {
 
    @Autowired
    private UserDao userDao;
@@ -30,14 +27,14 @@ public class CarServiceImp implements CarService {
    }
 
 
-
+   @Transactional
    @Override
    public void deleteUser(User user)  {
       userDao.deleteUser(user.getId());
 
    }
 
-
+   @Transactional
    public void updateUser(User user)  {
       userDao.updateUser(user);
    }

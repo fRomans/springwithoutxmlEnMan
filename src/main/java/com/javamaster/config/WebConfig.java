@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -18,6 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:db.properties")
+@EnableTransactionManagement
 @EnableWebMvc
 @ComponentScan(basePackages = "com.javamaster")
 public class WebConfig {
@@ -59,4 +62,13 @@ public class WebConfig {
         factoryBean.setAnnotatedClasses(User.class);
         return factoryBean;
     }
+
+    // непонимаю где используется getTransactionManager???????????????????????????????????????????????
+    @Bean
+    public HibernateTransactionManager getTransactionManager() {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(getSessionFactory().getObject());
+        return transactionManager;
+    }
+
 }

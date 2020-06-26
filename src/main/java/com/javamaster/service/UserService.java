@@ -5,7 +5,7 @@ import com.javamaster.model.User;
 
 import java.util.List;
 
-public interface CarService {
+public interface UserService {
 
     List<User> getListUsers();
     void addUser(User user);
