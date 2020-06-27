@@ -1,9 +1,7 @@
 package com.javamaster.dao;
 
 import com.javamaster.model.User;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,8 +26,9 @@ public class UserDaoImp implements UserDao {
         return query.getResultList();
     }
 
-    public User getClientById(long id) {
-        User user1 = (User) sessionFactory.openSession()
+    @Override
+    public User getUserById(long id) {
+        User user1 = (User) sessionFactory.getCurrentSession()
                 .get(User.class, id);
         return user1;
     }
@@ -38,7 +37,8 @@ public class UserDaoImp implements UserDao {
     public void deleteUser(Long id) {
         List<User> us2 = getListUsers();
         System.out.println(us2.size());
-        sessionFactory.getCurrentSession().delete(getClientById(id));
+        User user2 = getUserById(id);
+        sessionFactory.getCurrentSession().delete(user2);
 //                openSession().
 //                delete(getClientById(id));
         List<User> us3 = getListUsers();
@@ -49,7 +49,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public void updateUser(User user) {
 
-        sessionFactory.openSession().update(user);
+        sessionFactory.getCurrentSession().update(user);
 
     }
 
