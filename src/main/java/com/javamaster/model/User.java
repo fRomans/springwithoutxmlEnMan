@@ -1,6 +1,7 @@
 package com.javamaster.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "usersHMVC")
@@ -29,8 +30,6 @@ public class User {
       this.lastName = lastName;
       this.email = email;
    }
-
-
 
    public Long getId() {
       return id;
@@ -66,14 +65,27 @@ public class User {
 
     @Override
     public String toString() {
-
-
          String   result = "User{" +
                    "name=" + firstName +
                     "; lastName " + lastName +
                     "; email " + email +
                    '}';
-
         return result;
     }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      User user = (User) o;
+      return Objects.equals(id, user.id) &&
+              Objects.equals(firstName, user.firstName) &&
+              Objects.equals(lastName, user.lastName) &&
+              Objects.equals(email, user.email);
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(id, firstName, lastName, email);
+   }
 }

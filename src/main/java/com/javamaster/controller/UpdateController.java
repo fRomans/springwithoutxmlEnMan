@@ -26,24 +26,24 @@ public class UpdateController {
 
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String getAddUpdate(@RequestParam Long id, Model model) {
+    public String getPage(@RequestParam Long id, Model model) {
         User user = service.getUserById(id);
         model.addAttribute("user", user);
         return "updateUser";
     }
 
 
-            @RequestMapping(value = "/update", method = RequestMethod.POST)
-            public String getAddPost(@RequestParam Long id,@RequestParam String name
-                    , @RequestParam String last_name, @RequestParam String email, Model model) {
-                User user = service.getUserById(id);
-                user.setFirstName(name);
-                user.setLastName(last_name);
-                user.setEmail(email);
-                service.updateUser(user);
-                List<User> users = service.getListUsers();
-                model.addAttribute("users", users);
-                return "showUsers";
-            }
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String getAddPost(@RequestParam Long id, @RequestParam String name
+            , @RequestParam String last_name, @RequestParam String email, Model model) {
+        User user = service.getUserById(id);
+        user.setFirstName(name);
+        user.setLastName(last_name);
+        user.setEmail(email);
+        service.updateUser(user);
+        List<User> users = service.getListUsers();
+        model.addAttribute("users", users);
+        return "showUsers";
+    }
 
 }

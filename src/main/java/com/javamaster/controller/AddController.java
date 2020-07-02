@@ -27,18 +27,17 @@ public class AddController extends HttpServlet {
     private UserService service;
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String getAddGet() {
-        return "addUser";
+    public String getPage() {
+            return "addUser";
     }
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String getAddPost(@RequestParam String name, @RequestParam String last_name
+    public String addUser(@RequestParam String name, @RequestParam String last_name
             , @RequestParam String email, Model model) {
         User user = new User(name, last_name, email);
         service.addUser(user);
-        List<User> users = null;
-        users = service.getListUsers();
+        List<User> users = service.getListUsers();
         model.addAttribute("users", users);
         return "showUsers";
     }

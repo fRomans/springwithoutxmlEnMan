@@ -25,8 +25,7 @@ public class DeleteController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String getDeletePost(@RequestParam Long id, Model model1) {
         service.deleteUser(id);
-        List<User> users = null;
-        users = service.getListUsers();
+        List<User> users = service.getListUsers();
         model1.addAttribute("users", users);
         return "showUsers";
     }

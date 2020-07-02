@@ -12,26 +12,27 @@
         <td>password</td>
         <td>money</td>
     </tr>
-    <c:forEach items="${users}" var = "user">
+    <c:forEach items="${users}" var="user">
         <tr>
             <td>${user.getId()}</td>
             <td>${user.getFirstName()}</td>
             <td>${user.getLastName()}</td>
             <td>${user.getEmail()}</td>
             <td>
-                <form action = "/update" method="get">
+                <form action="/update" method="get">
                     <input type="hidden" name="id" value="${user.getId()}">
                     <input type="submit" value="Изменить" style="float:left">
                 </form>
                 <form action="/delete" method="get">
                     <input type="hidden" name="id" value="${user.getId()}">
                     <input type="submit" value="Удалить" style="float:left">
-                </form></td>
+                </form>
+            </td>
         </tr>
     </c:forEach>
 </table>
 
-<form action = "/add" method="get">
+<form action="/add" method="get">
     <input type="submit" value="Добавить нового пользователя">
 </form>
 
