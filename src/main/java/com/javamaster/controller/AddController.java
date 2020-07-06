@@ -29,8 +29,8 @@ public class AddController extends HttpServlet {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addUser(@ModelAttribute User user, Model model) {
 
-        User userObj = new User(user.getFirstName(), user.getLastName(), user.getEmail());
-        service.addUser(userObj);
+      //  User userObj = new User(user.getFirstName(), user.getLastName(), user.getEmail());
+        service.addUser(user);
         List<User> users = service.getListUsers();
         model.addAttribute("users", users);
         return "showUsers";

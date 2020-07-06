@@ -6,6 +6,7 @@ import com.javamaster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,13 +29,12 @@ public class UpdateController {
 
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String getAddPost(@RequestParam Long id, @RequestParam String name
-            , @RequestParam String last_name, @RequestParam String email, Model model) {
-        User user = service.getUserById(id);
-        user.setFirstName(name);
-        user.setLastName(last_name);
-        user.setEmail(email);
-        service.updateUser(user);
+    public String getAddPost(@ModelAttribute User user, Model model) {
+        User userUpdate = service.getUserById(user.getId());
+        userUpdate.setFirstName(user.getFirstName());
+        userUpdate.setLastName(user.getLastName());
+        userUpdate.setEmail(user.getEmail());
+        service.updateUser(userUpdate);
         List<User> users = service.getListUsers();
         model.addAttribute("users", users);
         return "showUsers";
