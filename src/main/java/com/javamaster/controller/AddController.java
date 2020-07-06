@@ -5,18 +5,12 @@ import com.javamaster.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -33,10 +27,10 @@ public class AddController extends HttpServlet {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addUser(@RequestParam String name, @RequestParam String last_name
-            , @RequestParam String email, Model model) {
-        User user = new User(name, last_name, email);
-        service.addUser(user);
+    public String addUser(@ModelAttribute User user, Model model) {
+
+        User userObj = new User(user.getFirstName(), user.getLastName(), user.getEmail());
+        service.addUser(userObj);
         List<User> users = service.getListUsers();
         model.addAttribute("users", users);
         return "showUsers";

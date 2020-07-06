@@ -10,7 +10,7 @@
         <td>id</td>
         <td>name</td>
         <td>password</td>
-        <td>money</td>
+        <td>email</td>
     </tr>
     <c:forEach items="${users}" var="user">
         <tr>
