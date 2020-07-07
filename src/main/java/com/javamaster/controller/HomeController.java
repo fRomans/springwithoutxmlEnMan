@@ -15,7 +15,7 @@ public class HomeController {
     @Autowired
     private UserService service;
 
-    @RequestMapping("/")
+    @RequestMapping("/") //url показа usera  в приложении(может не совпадать с url запуска сервера)
     public String getIndex(Model model){
         List<User>users = service.getListUsers();
         model.addAttribute("users", users);

@@ -29,7 +29,7 @@ public class UpdateController {
 
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String getAddPost(@ModelAttribute User user, Model model) {
+    public String getUpdateUser(@ModelAttribute User user, Model model) {
         User userUpdate = service.getUserById(user.getId());
         userUpdate.setFirstName(user.getFirstName());
         userUpdate.setLastName(user.getLastName());

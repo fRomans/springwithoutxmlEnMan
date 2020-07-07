@@ -18,12 +18,12 @@ public class DeleteController {
     private UserService service;
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String getDeleteGet() {
+    public String getDeletePage() {
         return "deleteUser";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String getDeletePost(@RequestParam Long id, Model model1) {
+    public String getDeleteUser(@RequestParam Long id, Model model1) {
         service.deleteUser(id);
         List<User> users = service.getListUsers();
         model1.addAttribute("users", users);
