@@ -1,47 +1,60 @@
 package com.javamaster.dao;
 
 import com.javamaster.model.User;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Override
     public void addUser(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        entityManager.persist(user);
     }
 
     @Override
     public List<User> getListUsers() {
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
+        TypedQuery<User> query = (TypedQuery<User>) entityManager.createQuery("select  u from User u");
         return query.getResultList();
+    }
+
+
+    @Override
+    public User findByUsername(String name) {
+        String sql = "select u from User u where u.name= :paramName";
+
+        User user = (User) entityManager.createQuery(sql)
+                .setParameter("paramName", name)
+                .getSingleResult();
+
+        return user;
+
     }
 
     @Override
     public User getUserById(long id) {
-        User user1 =  sessionFactory.getCurrentSession()
-                .get(User.class, id);
+        User user1 =  entityManager.find(User.class, id);
         return user1;
     }
 
     @Override
     public void deleteUser(Long id) {
         User user2 = getUserById(id);
-        sessionFactory.getCurrentSession().delete(user2);
+        entityManager.remove(user2);
     }
 
     @Override
     public void updateUser(User user) {
 
-        sessionFactory.getCurrentSession().update(user);
+        entityManager.refresh(user);
 
     }
 

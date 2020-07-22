@@ -1,81 +1,117 @@
 package com.javamaster.model;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
-@Table(name = "usersHMVC")
-public class User {
+@Table(name = "usersSS")
+public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    @Column(name = "firstName")
-    private String firstName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "lastName")
-    private String lastName;
+    @Column(name = "password")
+    private String password;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "money")
+    private Long money;
 
+//    @OneToMany(mappedBy="user",fetch = FetchType.EAGER)
+//    private Set<Role> roles;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> rolesfield;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+    public User(String name, String password, Long money) {
+        this.name = name;
+        this.password = password;
+        this.money = money;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    @Bean
-    public String getFirstName() {
-        return firstName;
+    @Override
+    public String getUsername() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-   @Bean
-    public String getLastName() {
-        return lastName;
-    }
-
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
-    public String toString() {
-        String result = "User{" +
-                "name=" + firstName +
-                "; lastname " + lastName +
-                "; email " + email +
-                '}';
-        return result;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getMoney() {
+        return money;
+    }
+
+    public void setMoney(Long money) {
+        this.money = money;
+    }
+
+    @Override
+    public Collection<Role> getAuthorities() {
+        return rolesfield;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.rolesfield = roles;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, password, money);
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override
@@ -83,14 +119,21 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(email, user.email);
+        return id == user.id &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(money, user.money) &&
+                Objects.equals(rolesfield, user.rolesfield);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email);
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", money=" + money +
+                ", roles=" + rolesfield +
+                '}';
     }
 }

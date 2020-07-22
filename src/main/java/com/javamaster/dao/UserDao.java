@@ -1,5 +1,6 @@
 package com.javamaster.dao;
 
+
 import com.javamaster.model.User;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface UserDao {
     void updateUser(User user);
     void deleteUser(Long id);
     User getUserById(long id);
-
+    User findByUsername(String name);
 }
